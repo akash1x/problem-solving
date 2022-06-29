@@ -1,0 +1,124 @@
+/**
+ 
+   Node {
+    int data;
+    Node* next;
+    Node* down;
+   } 
+
+Input :- head of linked list
+
+Output :- head of modified flattened linked list.
+
+Input :-
+
+ 10 -> 25 -> 33 -> 79 -> 101
+ |     |     |     |     | 
+ 14   39     34   80     120
+ |                 |
+ 77               99
+ 
+ 
+  
+  
+ 10->14->25->33->34->79->80->101->120 
+ 77                  99 
+ 
+ 
+Output :-
+
+ 10 -> 14 -> 25 -> 33 -> 34 -> 39 -> 77 -> 79 -> 80 -> 99 -> 101 -> 120
+ 
+ **/
+ 
+ 
+ Design a DS with following functions :-
+       0 1 2 3 
+  head 2 3 5 6  tail
+       a b c d
+
+  arr[2 3 5 6]      
+       
+    map a 2
+        b 3
+        c 5
+        d 6
+        
+  vector 2 3 -1 6 -1
+         0 1  2 3  4
+1. void insert(int data)
+2. void delete(int data)
+3. bool search(int data)
+4. int getRandom()
+
+Constant time O(1) complexity.
+
+class Node{
+    int key;
+    int val;
+    Node* next;
+    Node* prev;
+    
+    Node(int key,int val){
+        this->key=key;
+        this->val=val;
+    }
+    
+};
+Node* head= new Node(-1,-1);
+Node* tail= new Node(-1,-1);
+int c=0;
+unordered_map<int,Node*> m;    
+
+void insert(int data){
+    Node* newNode=new Node(c,data);
+    Node* nextNode=head->next;
+    newNode->next=nextNode;
+    newNode->prev=head;
+    head->next=newNode;
+    nextNode->prev=newNode;
+    m[data]=newNode;
+    c++;
+}
+
+bool search(int data){
+    if(m.find(data)!=m.end()){
+        return true;
+    }
+    return false;
+}
+
+void deleteNode(Node* address){
+    Node* prevNode= address->prev;
+    Node* nextNode= address->next;
+    
+    prevNode->next=nextNode;
+    nextNode->prev=prevNode;
+    
+}
+void delete(int data){
+    if(if(m.find(data)!=m.end()){
+        Node* nodeAdd=m[data];
+        deleteNode(nodeAdd);
+        m.erase(data);
+        
+    }else{
+        return;
+    }
+    
+    
+}
+
+
+int main(){
+    
+    
+    insert(5);
+}
+
+
+
+
+
+
+
